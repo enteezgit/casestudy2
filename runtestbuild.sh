@@ -196,3 +196,4 @@ fi
 #Clean docker containers
 #sudo docker kill websrvTEST mgmtNodeTEST dataNode1TEST dataNode2TEST sqlNodeTEST testsrvTEST || echo "Containers clean"
 #sudo docker rm websrvTEST mgmtNodeTEST dataNode1TEST dataNode2TEST sqlNodeTEST testsrvTEST || echo "Containers clean"
+
