@@ -1,0 +1,30 @@
+---
+- name: Install Sql Node
+  hosts: '{{ host }}'
+  environment:
+        http_proxy: "{{ http_proxy }}"
+        https_proxy: "{{ https_proxy }}" 
+
+  tasks:
+    - name: Add mysql user and group
+      command: "{{ item }}"
+      with_items:
+        - groupadd mysql
+        - useradd -g mysql mysql
+
+    - name: Extract MySql cluster archive
+      command: chdir=/ /bin/tar -zxvf mysql-cluster-gpl-7.4.12-linux-glibc2.5-x86_64.tar.gz -C /usr/local/ creates=/usr/local/mysql-cluster-gpl-7.4.12-linux-glibc2.5-x86_64      
+
+    - name: Create /etc/mysql if does not exist
+      file: path=/etc/mysql state=directory mode=0755
+    
+    - name: Copy my.cnf.sqlnode file to remote host
+      copy: src=clusterScripts/my.cnf.sqlnode dest=/etc/mysql/my.cnf
+ 
+    - name: Edit /etc/mysql/my.conf file
+      replace: dest=/etc/mysql/my.cnf regexp='^\[mysql_cluster\]' replace='[mysql_cluster]\nndb-connectstring={{ mgmtIP }}'
+      
+    - name: Execute script
+      script: clusterScripts/sqlscript.sh
+
+    

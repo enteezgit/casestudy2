@@ -1,0 +1,70 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+  <servlet>
+  	<servlet-name>EmpListServlet</servlet-name>
+  	<display-name>EmpListServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.devops.servlets.EmpListServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>RegEmpServlet</servlet-name>
+  	<display-name>RegEmpServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.devops.servlets.RegEmpServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>LoginServlet</servlet-name>
+  	<display-name>LoginServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.devops.servlets.LoginServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>LSCheckServlet</servlet-name>
+  	<display-name>LSCheckServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.devops.servlets.LSCheckServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>LateStayServlet</servlet-name>
+  	<display-name>LateStayServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.devops.servlets.LateStayServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>LSDeleteServlet</servlet-name>
+  	<display-name>LSDeleteServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.devops.servlets.LSDeleteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>EmpListServlet</servlet-name>
+  	<url-pattern>/EmpListServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>RegEmpServlet</servlet-name>
+  	<url-pattern>/RegEmpServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>LoginServlet</servlet-name>
+  	<url-pattern>/LoginServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>LSCheckServlet</servlet-name>
+  	<url-pattern>/LSCheckServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>LateStayServlet</servlet-name>
+  	<url-pattern>/LateStayServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>LSDeleteServlet</servlet-name>
+  	<url-pattern>/LSDeleteServlet</url-pattern>
+  </servlet-mapping>
+  <welcome-file-list>  
+   <welcome-file>views/index.html</welcome-file>
+  </welcome-file-list>
+</web-app>

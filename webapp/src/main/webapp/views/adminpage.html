@@ -1,0 +1,28 @@
+<!DOCTYPE>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Admin Page</title>
+<script src="../js/jquery-2.1.4.js"></script>
+<script type="text/javascript" src="../js/adminpage.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body>
+	<center>
+		<h2>ADMIN PAGE</h2>
+		<button id="late_stay_list">View Late Stay List</button>
+		<button id="reg_emp">Register Employee</button>
+		<button id="logout">Logout</button><br><br>
+		<table border='1' id="list"></table>
+		<form id="reg_emp_form">
+		   <table>
+		    <tr><td>Employee ID:</td><td><input type="number" id="id" required/></td></tr>
+			<tr><td>Employee Name:</td><td><input type="text" id="name" required/></td></tr>
+			<tr><td>Password:</td><td><input type="password" id="passwd"/></td></tr>
+		   </table><br>
+			<input type="submit" value="Register" id="register"/>
+		</form>
+		<span id="msg"></span>
+	</center>
+</body>
+</html>

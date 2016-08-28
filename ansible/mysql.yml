@@ -1,0 +1,58 @@
+---
+- name: Install MySQL for production ready server
+  hosts: "{{ host }}"
+  environment:
+        http_proxy: "{{ http_proxy }}"
+        https_proxy: "{{ https_proxy }}" 
+
+  tasks:
+    - name: Set MySQL root password before installing
+      debconf: name='mysql-server' question='mysql-server/root_password' value='{{mysql_root_password | quote}}' vtype='password'
+  
+    - name: Confirm MySQL root password before installing
+      debconf: name='mysql-server' question='mysql-server/root_password_again' value='{{mysql_root_password | quote}}' vtype='password'
+      
+    - name: Install MySQL
+      apt: package={{ item }} state=installed force=yes update_cache=yes cache_valid_time=3600
+      with_items:
+        - mysql-server
+        - mysql-client
+        - python-mysqldb
+      notify:
+        - start mysql
+       
+    - name: ensure mysql is running and starts on boot
+      service: name=mysql state=started enabled=true
+
+    - name: Force mysql service start now
+      command: /usr/sbin/service mysql start
+
+    - name: Secures the MySQL root user
+      mysql_user: user="root" password="{{ mysql_root_password }}" host="{{ item }}" login_password="{{mysql_root_password}}" login_user=root
+      with_items:
+        - "{{ ansible_fqdn }}"
+        - ::1
+        - 127.0.0.1
+        - localhost
+      
+    - name: Create root2 user 
+      mysql_user: name=root2 password="{{mysql_root_password}}" priv=*.*:ALL,GRANT state=present login_user=root login_password="{{mysql_root_password}}"
+
+    - name: Copy MYSQL configuration file to remote host
+      copy: src=my.cnf dest=/etc/mysql/my.cnf mode=0544
+
+    - name: Copy MySql script to remote host
+      copy: src=sqltables.sql dest=/tmp/sqltables.sql mode=0555
+
+    - name: Execute DDL script
+      mysql_db: login_user=root2 login_password={{ mysql_root_password }} state=import name=all target=/tmp/sqltables.sql
+
+    - name: Force mysql service restart
+      command: /usr/sbin/service mysql restart
+      
+  handlers:
+    - name: start mysql
+      service: name=mysql state=started  enabled=true
+
+    - name: restart mysql
+      service: name=mysql state=restarted

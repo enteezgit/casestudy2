@@ -1,0 +1,35 @@
+---
+- hosts: '{{ host }}'
+  user: root
+  environment:
+        http_proxy: "{{ http_proxy }}"
+        https_proxy: "{{ https_proxy }}"
+        JAVA_HOME: /usr/lib/jvm/java-7-openjdk-amd64
+        CATALINA_HOME: /opt/apache-tomcat-6.0.32
+                   
+  tasks:
+
+   - lineinfile: dest=/etc/environment state=present regexp='^JAVA_HOME' line='JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64'
+        
+   - lineinfile: dest=/root/.bashrc state=present regexp='^JAVA_HOME' line='JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64'
+
+   - lineinfile: dest=/etc/environment state=present regexp='^LC_ALL' line='LC_ALL=C'
+
+   - name: Extract archive
+     command: chdir=/usr/local /bin/tar xvf /opt/apache-tomcat-6.0.32.tar.gz -C /opt/ creates=/opt/apache-tomcat-6.0.32
+
+   - name: Symlink install directory
+     file: src=/opt/apache-tomcat-6.0.32 path=/usr/local/tomcat state=link
+
+   - lineinfile: dest=/etc/environment state=present regexp='^CATALINA_HOME' line='CATALINA_HOME=/opt/apache-tomcat-6.0.32'
+               
+   - lineinfile: dest=/root/.bashrc state=present regexp='^CATALINA_HOME' line='CATALINA_HOME=/opt/apache-tomcat-6.0.32'   
+    
+   - name: Starting tomcat
+     command: /opt/apache-tomcat-6.0.32/bin/startup.sh
+
+   - name: Stopping tomcat
+     command: /opt/apache-tomcat-6.0.32/bin/shutdown.sh
+     
+   - name: Starting tomcat
+     command: /opt/apache-tomcat-6.0.32/bin/startup.sh

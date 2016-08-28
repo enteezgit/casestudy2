@@ -1,0 +1,32 @@
+---
+- hosts: '{{ mgmtIP }}'
+  tasks:
+    - name: Start Management Node
+      command: /usr/local/bin/ndb_mgmd -f /var/lib/mysql-cluster/config.ini  --configdir=/var/lib/mysql-cluster
+
+- hosts: '{{ dataIP1 }}'
+  tasks:
+    - name: Start Data Node 1
+      command: /usr/local/bin/ndbd
+
+- hosts: '{{ dataIP2 }}'
+  tasks:
+    - name: Start Data Node 2
+      command: /usr/local/bin/ndbd
+     
+- hosts: '{{ sqlIP }}'
+  tasks:
+    - name: Start Sql Node
+      command: /etc/init.d/mysql.server start
+      
+    - name: Create root2 user 
+      mysql_user: name=root2 password="{{mysql_root_password}}" priv=*.*:ALL,GRANT state=present login_user=root
+      
+    - name: Copy MySql script to remote host
+      copy: src=sqltables.sql dest=/tmp/sqltables.sql mode=0555
+
+    - name: Execute DDL script
+      mysql_db: login_user=root2 login_password={{ mysql_root_password }} state=import name=all target=/tmp/sqltables.sql
+
+    - name: Restart Sql Node
+      command: /etc/init.d/mysql.server restart

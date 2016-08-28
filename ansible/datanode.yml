@@ -1,0 +1,21 @@
+---
+- name: Install Data Node
+  hosts: '{{ host }}'
+  environment:
+        http_proxy: "{{ http_proxy }}"
+        https_proxy: "{{ https_proxy }}" 
+  tasks:
+   
+    - name: Extract MySql cluster archive
+      command: chdir=/ /bin/tar xvf mysql-cluster-gpl-7.4.12-linux-glibc2.5-x86_64.tar.gz -C /root/ creates=/root/mysql-cluster-gpl-7.4.12-linux-glibc2.5-x86_64   
+
+    - name: Execute script
+      script: clusterScripts/datascript.sh
+
+    - name: Copy my.cnf file to remote host
+      copy: src=clusterScripts/my.cnf dest=/etc/my.cnf
+ 
+    - name: Edit my.cnf file
+      replace: dest=/etc/my.cnf regexp='^\[mysql_cluster\]' replace='[mysql_cluster]\nndb-connectstring={{ mgmtIP }}'
+
+

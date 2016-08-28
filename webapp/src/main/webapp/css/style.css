@@ -1,0 +1,52 @@
+html{
+	background-color:lightgrey;
+	font-family:'Arial';
+}
+body{
+	background-color:white;
+	margin:100px 250px 100px 250px;
+	height:500px;
+	padding:20px 20px 20px 20px;
+}
+button{
+	width:150px;
+	height:30px;
+	margin:0 10px 0 10px;
+}
+#list{
+	margin-top:20px;
+	background-color:buttonface;
+	font-family:courier;
+	border-collapse:collapse;
+}
+#list td{
+	width:150px;
+	height:25px;
+	padding:0px 5px 0 5px;
+}
+#reg_emp_form{
+	margin-top:20px;
+}
+#register{
+	width:100px;
+	height:25px;
+}
+fieldset{
+	width:200px;
+	height:180px;
+}
+#msg{
+	color:brown;
+	font-family:"Times New Roman";
+	font-style:italic;
+	font-size:15px;
+}
+#location{
+	width:150px;
+	height:25px;
+	margin-left:20px;
+}
+
+#form{
+	height:200px;
+}

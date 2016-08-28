@@ -1,0 +1,32 @@
+---
+- name: Install Management Node
+  hosts: '{{ host }}'
+  environment:
+        http_proxy: "{{ http_proxy }}"
+        https_proxy: "{{ https_proxy }}" 
+
+  vars:
+        clusterdir: /var/lib/mysql-cluster/config.ini
+
+  tasks:
+
+    - name: Extract MySql cluster archive
+      command: chdir=/ /bin/tar -zxvf mysql-cluster-gpl-7.4.12-linux-glibc2.5-x86_64.tar.gz -C /root/ creates=/root/mysql-cluster-gpl-7.4.12-linux-glibc2.5-x86_64     
+
+    - name: Execute script
+      script: clusterScripts/mgmtscript.sh
+
+    - name: Copy config.ini file to remote host
+      copy: src=clusterScripts/config.ini dest=/var/lib/mysql-cluster
+ 
+    - name: Edit config.ini file
+      replace: dest={{ clusterdir }} regexp='^\[ndb_mgmd\]' replace='[ndb_mgmd]\nhostname={{ host }}'
+
+    - name: Edit config.ini file
+      replace: dest={{ clusterdir }} regexp='data node \"A\":' replace='data node \"A\":\nhostname={{ dataIP1 }}'
+
+    - name: Edit config.ini file
+      replace: dest={{ clusterdir }} regexp='data node \"B\":' replace='data node \"B\":\nhostname={{ dataIP2 }}'
+
+    - name: Edit config.ini file
+      replace: dest={{ clusterdir }} regexp='^\[mysqld\]' replace='[mysqld]\nhostname={{ sqlIP }}'
