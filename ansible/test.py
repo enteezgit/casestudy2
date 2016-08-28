@@ -19,6 +19,8 @@ import unittest
 import re
 from selenium import webdriver
 import os
+#from sys import *
+import sys
 
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait # available since 2.4.0
@@ -26,15 +28,13 @@ from selenium.webdriver.support import expected_conditions as EC # available sin
 from selenium.webdriver.common.by import By
 
 class Test_Home_page(unittest.TestCase):
-
     def setUp(self):
         self.browser = webdriver.Firefox()
 
     def testTitle(self):
-        self.browser.get('http://10.244.45.252:8080/webapp/views/homepage.html') 
+        self.browser.get('http://'+IP+':'+PORT+'/webapp/views/homepage.html') 
 	#print(self.browser.page_source)
         self.assertIn('Late Stay Management System', self.browser.title)
-
     def tearDown(self):
         self.browser.quit()
 
@@ -47,7 +47,7 @@ class Test_Login(unittest.TestCase):
 	# Create a new instance of the Firefox driver
 	driver = webdriver.Firefox()
 
-	driver.get('http://10.244.45.252:8080/webapp/views/homepage.html') 
+	driver.get('http://'+IP+':'+PORT+'/webapp/views/homepage.html') 
 	#print driver.title
 
 	# find the element that's name attribute is q (the google search box)
@@ -57,7 +57,10 @@ class Test_Login(unittest.TestCase):
 
 	src = driver.page_source
 	text_found = re.search(r'View Late Stay List', src)
-	self.assertNotEqual(text_found, None)
+        if int(BUILDNO) % 2 != 0:
+           text_found=None
+        
+	self.assertNotEqual(text_found,None)
 	driver.quit()
 
     def tearDown(self):
@@ -72,15 +75,14 @@ class Test_SignUpLink(unittest.TestCase):
 	# Create a new instance of the Firefox driver
 	driver = webdriver.Firefox()
 
-	driver.get('http://10.244.45.252:8080/webapp/views/adminpage.html') 
+	driver.get('http://'+IP+':'+PORT+'/webapp/views/adminpage.html') 
 	#print driver.title
-
 	# find the element that's name attribute is q (the google search box)
 	
 	driver.find_element_by_id('reg_emp').click()
-	driver.find_element_by_id('id').send_keys("0185411")
-	driver.find_element_by_id('name').send_keys("sumedh88")
-	driver.find_element_by_id('passwd').send_keys("pass1234")
+	driver.find_element_by_id('id').send_keys("018543")
+	driver.find_element_by_id('name').send_keys("akshayv")
+	driver.find_element_by_id('passwd').send_keys("pasv")
 	driver.find_element_by_id('register').click()
         
         wait = WebDriverWait(driver, 10)
@@ -98,6 +100,10 @@ class Test_SignUpLink(unittest.TestCase):
         self.browser.quit()
 
 if __name__ == '__main__':
+     if len(sys.argv) > 1:
+	BUILDNO = sys.argv.pop()
+        PORT = sys.argv.pop()
+        IP = sys.argv.pop()
      log_file = '/root/test_result.log'
      f = open(log_file, "w")
      runner = unittest.TextTestRunner(f)

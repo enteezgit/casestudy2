@@ -3,6 +3,6 @@
   "svnusr" : "--SVNUSER--",
   "svnpass" : "--SVNPASS--",
   "repofolder" : "--SVNREPO--",
-  "ip" : "10.51.224.67",
+  "ip" : "10.51.238.183",
   "port" : 6306
 }

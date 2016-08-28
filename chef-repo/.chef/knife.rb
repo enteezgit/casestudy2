@@ -9,7 +9,7 @@ chef_server_url          "https://10.51.238.183/organizations/persistent"
 cookbook_path            ["#{current_dir}/../cookbooks"]
 validation_client_name   "persistent-validator"
 validation_key           "#{current_dir}/persistent-validator.pem"
-syntax_check_cache_path  "#/home/niloday/chef-repo/.chef/syntaxcache"
+syntax_check_cache_path  "/home/niloday/chef-repo/.chef/syntaxcache"
 cookbook_path            ["/home/niloday/chef-repo/cookbooks"]
 
 no_proxy                 '127.0.0.1,10.51.238.183,gadevopsnt2,*.persistent.com,*.persistent.co.in'

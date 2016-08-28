@@ -37,5 +37,5 @@ execute "Wait for WAR deployment" do
 end
 
 execute "Update property file - IP address, port and username" do
-  command "/bin/sed -i  's/localhost/#{deployprops['ip']}/; s/3306/#{deployprops['port']}/; s/root/root2/' /opt/apache-tomcat-6.0.32/webapps/webapp/WEB-INF/classes/config.properties"
+  command "/bin/echo -e 'dbport=#{deployprops['port']}\ndbuser=root2\ndbpasswd=pass123\ndbhost=#{deployprops['ip']}\ndbname=devopsdb' > /opt/apache-tomcat-6.0.32/webapps/webapp/WEB-INF/classes/config.properties"
 end

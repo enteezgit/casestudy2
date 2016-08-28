@@ -1,36 +1,23 @@
 ---
 - name: Selenium Automation
-  hosts: "{{ host }}"
+  hosts: '{{ host }}' 
   environment:
         http_proxy: "{{ http_proxy }}"
-        https_proxy: "{{ https_proxy }}" 
+        https_proxy: "{{ https_proxy }}"
 
   tasks:
 
-    - name: Install Packages
-      apt: pkg= {{ item }} update_cache=true
-      with_items:
-        - firefox 
-        - xvfb 
-        - python-pip 
-        - subversion
+    - name: Install packages
+      script: packages.sh
 
     - name: Install selenium
-      pip: selenium
+      shell: pip install selenium
 
     - name: Copy test cases file to remote host
       copy: src=test.py dest=/root/
-
-
-    - name: Run processes
-      command: {{ item }}
-      with_items:
-        - nohup Xvfb :10 -ac &
-        - export DISPLAY=:10
-        - firefox –safe-mode &
- 
-    - name: Run python
-      command: python test.py
+   
+    - name: Copy test cases file to remote host
+      copy: src=testreport.sh dest=/root/ mode=0744
 
     - name: Analyse test result
-      script: testreport.sh
+      shell: ./testreport.sh '{{ vmIP }}' '{{ port }}' '{{ buildno }}'
