@@ -1,8 +1,8 @@
 {
   "id" : "deploy_params",
-  "svnusr" : "",
-  "svnpass" : "",
-  "repofolder" : "",
+  "svnusr" : "--SVNUSER--",
+  "svnpass" : "--SVNPASS--",
+  "repofolder" : "--SVNREPO--",
   "ip" : "10.51.224.67",
   "port" : 6306
 }
