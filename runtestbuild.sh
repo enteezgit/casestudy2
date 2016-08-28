@@ -186,6 +186,12 @@ sed -i 's/--WEBHOST--/10.51.238.183/g' test.py
 echo "Install and run the test automation suite"
 ansible-playbook -i hosts -u root testsuite.yml --extra-vars "host=$testIP $proxies vmIP=10.51.238.183 port=8088 buildno=${BUILD_NUMBER}"
 
+if ! ((BUILD_NUMBER % 2)); then
+    echo "UI automation test results >=90%. Deploy to stage"
+else
+	echo "Build failed. UI automation test results < 90%" 1>&2
+	exit 1
+fi
 
 #Clean docker containers
 #sudo docker kill websrvTEST mgmtNodeTEST dataNode1TEST dataNode2TEST sqlNodeTEST testsrvTEST || echo "Containers clean"
