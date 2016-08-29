@@ -33,7 +33,6 @@ class Test_Home_page(unittest.TestCase):
 
     def testTitle(self):
         self.browser.get('http://'+IP+':'+PORT+'/webapp/views/homepage.html') 
-    #print(self.browser.page_source)
         self.assertIn('Late Stay Management System', self.browser.title)
     def tearDown(self):
         self.browser.quit()
@@ -46,7 +45,9 @@ class Test_Home_page2(unittest.TestCase):
         driver = webdriver.Firefox()
         driver.get('http://'+IP+':'+PORT+'/webapp/views/homepage.html')
         src = driver.page_source
-        self.assertIn('ONE', src)
+        text_found = re.search(r"ONE", src)
+        self.assertNotEqual(text_found, None)
+        
     def tearDown(self):
         self.browser.quit()
         
@@ -58,7 +59,9 @@ class Test_Home_page3(unittest.TestCase):
         driver = webdriver.Firefox()
         driver.get('http://'+IP+':'+PORT+'/webapp/views/homepage.html')
         src = driver.page_source
-        self.assertIn('TWO', src)
+        text_found = re.search(r"TWO", src)
+        self.assertNotEqual(text_found, None)
+        
     def tearDown(self):
         self.browser.quit()
 
@@ -67,10 +70,8 @@ class Test_Home_page4(unittest.TestCase):
         self.browser = webdriver.Firefox()
 
     def testTitle(self):
-        driver = webdriver.Firefox()
-        driver.get('http://'+IP+':'+PORT+'/webapp/views/homepage.html')
-        src = driver.page_source
-        self.assertIn('Late Stay Management System', src)
+        self.browser.get('http://'+IP+':'+PORT+'/webapp/views/homepage.html') 
+        self.assertIn('Late Stay Management System', self.browser.title)
     def tearDown(self):
         self.browser.quit()
         
@@ -79,11 +80,8 @@ class Test_Home_page5(unittest.TestCase):
         self.browser = webdriver.Firefox()
 
     def testTitle(self):
-        driver = webdriver.Firefox()
-        driver.get('http://'+IP+':'+PORT+'/webapp/views/homepage.html')
-        src = driver.page_source
-        self.assertIn('Late Stay Management System', src)
-        
+        self.browser.get('http://'+IP+':'+PORT+'/webapp/views/homepage.html') 
+        self.assertIn('Late Stay Management System', self.browser.title)
     def tearDown(self):
         self.browser.quit()
         
@@ -92,11 +90,8 @@ class Test_Home_page6(unittest.TestCase):
         self.browser = webdriver.Firefox()
 
     def testTitle(self):
-        driver = webdriver.Firefox()
-        driver.get('http://'+IP+':'+PORT+'/webapp/views/homepage.html')
-        src = driver.page_source
-        self.assertIn('Late Stay Management System', src)
-        
+        self.browser.get('http://'+IP+':'+PORT+'/webapp/views/homepage.html') 
+        self.assertIn('Late Stay Management System', self.browser.title)
     def tearDown(self):
         self.browser.quit()
 
@@ -106,10 +101,8 @@ class Test_Home_page7(unittest.TestCase):
         self.browser = webdriver.Firefox()
 
     def testTitle(self):
-        driver = webdriver.Firefox()
-        driver.get('http://'+IP+':'+PORT+'/webapp/views/homepage.html')
-        src = driver.page_source
-        self.assertIn('Late Stay Management System', src)    
+        self.browser.get('http://'+IP+':'+PORT+'/webapp/views/homepage.html') 
+        self.assertIn('Late Stay Management System', self.browser.title)
     def tearDown(self):
         self.browser.quit()
         
@@ -118,11 +111,8 @@ class Test_Home_page8(unittest.TestCase):
         self.browser = webdriver.Firefox()
 
     def testTitle(self):
-        driver = webdriver.Firefox()
-        driver.get('http://'+IP+':'+PORT+'/webapp/views/homepage.html')
-        src = driver.page_source
-        self.assertIn('Late Stay Management System', src)
-        
+        self.browser.get('http://'+IP+':'+PORT+'/webapp/views/homepage.html') 
+        self.assertIn('Late Stay Management System', self.browser.title)
     def tearDown(self):
         self.browser.quit()
         
