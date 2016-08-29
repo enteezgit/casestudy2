@@ -172,13 +172,12 @@ knife bootstrap $webIP -x root -P pass -N websrvSTAGE -r 'recipe[devopssvn]'  --
 
 echo "Changing into ansible dir at:",$ANSIBLE_WORKSPACE
 cd $ANSIBLE_WORKSPACE
-echo "Update test automation script with web server ip"
-sed -i 's/--WEBHOST--/10.51.238.183/g' test.py
 
 echo "Install and run the test automation suite"
 ansible-playbook -i hosts -u root testsuite.yml --extra-vars "host=$testIP $proxies vmIP=10.51.238.183 port=8088 buildno=${BUILD_NUMBER}"
 
-sudo docker cp testsrvSTAGE:/root/result.txt ~/result.txt
+cd $WORKSPACE
+sudo docker cp testsrvSTAGE:/root/result.txt $WORKSPACE/result.txt
 
 #Read the number of failed cases from result.txt
 testResult=`cat result.txt`
