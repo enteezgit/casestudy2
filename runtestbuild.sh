@@ -183,8 +183,8 @@ sudo docker cp testsrvTEST:/root/result.txt $WORKSPACE/result.txt
 testResult=`cat result.txt`
 
 #Clean docker containers
-sudo docker kill websrvTEST mgmtNodeTEST dataNode1TEST dataNode2TEST sqlNodeTEST testsrvTEST || echo "Containers clean"
-sudo docker rm websrvTEST mgmtNodeTEST dataNode1TEST dataNode2TEST sqlNodeTEST testsrvTEST || echo "Containers clean"
+#sudo docker kill websrvTEST mgmtNodeTEST dataNode1TEST dataNode2TEST sqlNodeTEST testsrvTEST || echo "Containers clean"
+#sudo docker rm websrvTEST mgmtNodeTEST dataNode1TEST dataNode2TEST sqlNodeTEST testsrvTEST || echo "Containers clean"
 
 #There are total 10 cases, so if at least 9 passed then build qualifies for STAGE build
 if [ "$testResult" -le 1 ]

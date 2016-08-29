@@ -183,8 +183,8 @@ sudo docker cp testsrvSTAGE:/root/result.txt $WORKSPACE/result.txt
 testResult=`cat result.txt`
 
 #Clean docker containers
-sudo docker kill websrvSTAGE mgmtNodeSTAGE dataNode1STAGE dataNode2STAGE sqlNodeSTAGE testsrvSTAGE || echo "Containers clean"
-sudo docker rm websrvSTAGE mgmtNodeSTAGE dataNode1STAGE dataNode2STAGE sqlNodeSTAGE testsrvSTAGE || echo "Containers clean"
+#sudo docker kill websrvSTAGE mgmtNodeSTAGE dataNode1STAGE dataNode2STAGE sqlNodeSTAGE testsrvSTAGE || echo "Containers clean"
+#sudo docker rm websrvSTAGE mgmtNodeSTAGE dataNode1STAGE dataNode2STAGE sqlNodeSTAGE testsrvSTAGE || echo "Containers clean"
 
 #There are total 10 cases, so if all passed then build qualifies for PRODUCTION build
 if [ "$testResult" -eq 0 ]
