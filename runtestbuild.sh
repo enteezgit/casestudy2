@@ -178,6 +178,7 @@ ansible-playbook -i hosts -u root testsuite.yml --extra-vars "host=$testIP $prox
 
 cd $WORKSPACE
 sudo docker cp testsrvTEST:/root/result.txt $WORKSPACE/result.txt
+sudo docker cp testsrvTEST:/root/test_result.log $WORKSPACE/test_result.log
 
 #Read the number of failed cases from result.txt
 testResult=`cat result.txt`
