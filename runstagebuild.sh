@@ -1,6 +1,6 @@
 #Clean docker containers
-sudo docker kill websrvTEST mgmtNodeTEST dataNode1TEST dataNode2TEST sqlNodeTEST testsrvTEST || echo "Containers clean"
-sudo docker rm websrvTEST mgmtNodeTEST dataNode1TEST dataNode2TEST sqlNodeTEST testsrvTEST || echo "Containers clean"
+sudo docker kill websrvSTAGE mgmtNodeSTAGE dataNode1STAGE dataNode2STAGE sqlNodeSTAGE testsrvSTAGE || echo "Containers clean"
+sudo docker rm websrvSTAGE mgmtNodeSTAGE dataNode1STAGE dataNode2STAGE sqlNodeSTAGE testsrvSTAGE || echo "Containers clean"
 
 export ANSIBLE_WORKSPACE=$WORKSPACE/ansible
 echo WORKSPACE $WORKSPACE
@@ -9,16 +9,16 @@ export CHEF_REPO_WORKSPACE=$WORKSPACE/chef-repo
 echo $CHEF_REPO_WORKSPACE
 
 cd $CHEF_REPO_WORKSPACE
-#kclwt=$(knife node list | grep websrvTEST | tr '\n' ' ')
-#if [[ "${kclwt}" == *"websrvTEST"* ]];then
+#kclwt=$(knife node list | grep websrvSTAGE | tr '\n' ' ')
+#if [[ "${kclwt}" == *"websrvSTAGE"* ]];then
 #    echo "Delete node from chef server"
-    knife node delete websrvTEST -y || echo "Knife node ok"
+    knife node delete websrvSTAGE -y || echo "Knife node ok"
 #fi
 
-#kclwt=$(knife client list | grep websrvTEST | tr '\n' ' ')
-#if [[ "${kclwt}" == *"websrvTEST"* ]];then
+#kclwt=$(knife client list | grep websrvSTAGE | tr '\n' ' ')
+#if [[ "${kclwt}" == *"websrvSTAGE"* ]];then
 #	echo "Delete client from chef server"
-    knife client delete websrvTEST -y || echo "Knife client ok"
+    knife client delete websrvSTAGE -y || echo "Knife client ok"
 #fi
 
 cd $WORKSPACE
@@ -52,49 +52,49 @@ else
     #svn update --username $svnUser --password $svnPasswd --no-auth-cache --non-interactive --trust-server-cert #Update the existing file to SVN
 fi
 
-echo "Commiting into svn as Ready for TEST"
-#svn commit --username $svnUser --password $svnPasswd --no-auth-cache --non-interactive --trust-server-cert -m "Ready for TEST" #Commit the file to SVN
+echo "Commiting into svn as Ready for STAGE"
+#svn commit --username $svnUser --password $svnPasswd --no-auth-cache --non-interactive --trust-server-cert -m "Ready for STAGE" #Commit the file to SVN
 
-#Run the Web Server container in TEST environment
+#Run the Web Server container in STAGE environment
 echo "Create web server container in docker"
-webSrvCont=$(sudo docker run -td -e ROOT_PASS="pass" -p 8022:22 -p 8088:8080 --name websrvTEST enteezgit/casestudy:1.0)
+webSrvCont=$(sudo docker run -td -e ROOT_PASS="pass" -p 8022:22 -p 8088:8080 --name websrvSTAGE enteezgit/casestudy:1.0)
 #Retrieve the server IP address
 webIP=$(sudo docker inspect --format '{{ .NetworkSettings.IPAddress }}' ${webSrvCont})
 echo "IP of web server is:",$webIP
 
 
-#Run the Management node container in TEST environment
+#Run the Management node container in STAGE environment
 echo "Create management node container in docker"
-mgmtNodeCont=$(sudo docker run -td -e ROOT_PASS="pass"  -p 8023:22 -p 8306:3306 -p 8186:1186 --name mgmtNodeTEST enteezgit/casestudy:1.0)
+mgmtNodeCont=$(sudo docker run -td -e ROOT_PASS="pass"  -p 8023:22 -p 8306:3306 -p 8186:1186 --name mgmtNodeSTAGE enteezgit/casestudy:1.0)
 #Retrieve the node IP address
 mgmtIP=$(sudo docker inspect --format '{{ .NetworkSettings.IPAddress }}' ${mgmtNodeCont})
 echo "IP of management node is:",$mgmtIP
 
-#Run the 1st Data node container in TEST environment
+#Run the 1st Data node container in STAGE environment
 echo "Create the 1st data node container in docker"
-dataNodeCont1=$(sudo docker run -td -e ROOT_PASS="pass"  -p 8024:22 -p 9306:3306 -p 9202:2202 --name dataNode1TEST enteezgit/casestudy:1.0)
+dataNodeCont1=$(sudo docker run -td -e ROOT_PASS="pass"  -p 8024:22 -p 9306:3306 -p 9202:2202 --name dataNode1STAGE enteezgit/casestudy:1.0)
 #Retrieve the node IP address
 dataIP1=$(sudo docker inspect --format '{{ .NetworkSettings.IPAddress }}' ${dataNodeCont1})
 echo "IP of first data node is:",$dataIP1
 
 
-#Run the 2nd Data node container in TEST environment
+#Run the 2nd Data node container in STAGE environment
 echo "Create the 2nd data node container in docker"
-dataNodeCont2=$(sudo docker run -td -e ROOT_PASS="pass"  -p 8025:22 -p 7306:3306 -p 7202:2202 --name dataNode2TEST enteezgit/casestudy:1.0)
+dataNodeCont2=$(sudo docker run -td -e ROOT_PASS="pass"  -p 8025:22 -p 7306:3306 -p 7202:2202 --name dataNode2STAGE enteezgit/casestudy:1.0)
 #Retrieve the node IP address
 dataIP2=$(sudo docker inspect --format '{{ .NetworkSettings.IPAddress }}' ${dataNodeCont2})
 echo "IP of second data node is:",$dataIP2
 
-#Run the SQL node container in TEST environment
+#Run the SQL node container in STAGE environment
 echo "Create sql node container in docker"
-sqlNodeCont=$(sudo docker run -td -e ROOT_PASS="pass"  -p 8026:22 -p 6306:3306 --name sqlNodeTEST enteezgit/casestudy:1.0)
+sqlNodeCont=$(sudo docker run -td -e ROOT_PASS="pass"  -p 8026:22 -p 6306:3306 --name sqlNodeSTAGE enteezgit/casestudy:1.0)
 #Retrieve the node IP address
 sqlIP=$(sudo docker inspect --format '{{ .NetworkSettings.IPAddress }}' ${sqlNodeCont})
 echo "IP of sql node is:",$sqlIP
 
-#Run the UI automation server container in TEST environment
+#Run the UI automation server container in STAGE environment
 echo "Create test automation environment container in docker"
-testSrvCont=$(sudo docker run -td -e ROOT_PASS="pass"  -p 8027:22 --name testsrvTEST enteezgit/casestudy:1.0)
+testSrvCont=$(sudo docker run -td -e ROOT_PASS="pass"  -p 8027:22 --name testsrvSTAGE enteezgit/casestudy:1.0)
 #Retrieve the server IP address
 testIP=$(sudo docker inspect --format '{{ .NetworkSettings.IPAddress }}' ${testSrvCont})
 echo "IP of test server is:",$testIP
@@ -162,13 +162,13 @@ fi
 #Run knife data bag command upload the databag to server
 knife data bag from file deployprops data_bags/deployprops/deploy_params.json
 
-knife node delete websrvTEST -y || echo "Knife node ok"
+knife node delete websrvSTAGE -y || echo "Knife node ok"
 
-knife client delete websrvTEST -y || echo "Knife client ok"
+knife client delete websrvSTAGE -y || echo "Knife client ok"
 
-echo "Run knife bootstrap command to bootstrap the websrvTEST server as a node"
-#Run knife bootstrap command to bootstrap the websrvTEST server as a node
-knife bootstrap $webIP -x root -P pass -N websrvTEST -r 'recipe[devopssvn]'  --node-ssl-verify-mode none  --bootstrap-proxy http://$svnUser:$svnPasswd@ptproxy.persistent.co.in:8080
+echo "Run knife bootstrap command to bootstrap the websrvSTAGE server as a node"
+#Run knife bootstrap command to bootstrap the websrvSTAGE server as a node
+knife bootstrap $webIP -x root -P pass -N websrvSTAGE -r 'recipe[devopssvn]'  --node-ssl-verify-mode none  --bootstrap-proxy http://$svnUser:$svnPasswd@ptproxy.persistent.co.in:8080
 
 echo "Changing into ansible dir at:",$ANSIBLE_WORKSPACE
 cd $ANSIBLE_WORKSPACE
@@ -178,17 +178,17 @@ sed -i 's/--WEBHOST--/10.51.238.183/g' test.py
 echo "Install and run the test automation suite"
 ansible-playbook -i hosts -u root testsuite.yml --extra-vars "host=$testIP $proxies vmIP=10.51.238.183 port=8088 buildno=${BUILD_NUMBER}"
 
-sudo docker cp testsrvTEST:/root/result.txt ~/result.txt
+sudo docker cp testsrvSTAGE:/root/result.txt ~/result.txt
 
 #Read the number of failed cases from result.txt
 testResult=`cat result.txt`
 
 #Clean docker containers
-sudo docker kill websrvTEST mgmtNodeTEST dataNode1TEST dataNode2TEST sqlNodeTEST testsrvTEST || echo "Containers clean"
-sudo docker rm websrvTEST mgmtNodeTEST dataNode1TEST dataNode2TEST sqlNodeTEST testsrvTEST || echo "Containers clean"
+sudo docker kill websrvSTAGE mgmtNodeSTAGE dataNode1STAGE dataNode2STAGE sqlNodeSTAGE testsrvSTAGE || echo "Containers clean"
+sudo docker rm websrvSTAGE mgmtNodeSTAGE dataNode1STAGE dataNode2STAGE sqlNodeSTAGE testsrvSTAGE || echo "Containers clean"
 
-#There are total 10 cases, so if at least 9 passed then build qualifies for STAGE build
-if [ "$testResult" -le 1 ]
+#There are total 10 cases, so if all passed then build qualifies for PRODUCTION build
+if [ "$testResult" -eq 0 ]
 then
 	echo "Execute next build"
   	exit 0

@@ -1,8 +1,9 @@
 [WebServer]
-172.17.0.7 ansible_ssh_pass=pass
+172.17.0.2 ansible_ssh_pass=pass
 
 [DbServer]
-172.17.0.2 ansible_ssh_pass=pass
 172.17.0.3 ansible_ssh_pass=pass
 172.17.0.4 ansible_ssh_pass=pass
 172.17.0.5 ansible_ssh_pass=pass
+172.17.0.6 ansible_ssh_pass=pass
+172.17.0.7 ansible_ssh_pass=pass
