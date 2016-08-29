@@ -44,16 +44,10 @@ fi
 
 fileStatus=`svn status webapp.war | awk '$2 == "readme.txt" {print $1}'`
 
-if [ "$fileStatus" != 'M' ]; then
-    echo "Adding new file to svn"
-	#svn add --username $svnUser --password $svnPasswd --no-auth-cache --non-interactive --trust-server-cert $warFile #Add the new file to SVN
-else
-    echo "Updating existing file into svn repo"
-    #svn update --username $svnUser --password $svnPasswd --no-auth-cache --non-interactive --trust-server-cert #Update the existing file to SVN
-fi
+svn update --username $svnUser --password $svnPasswd --no-auth-cache --non-interactive --trust-server-cert #Update the existing file to SVN
 
 echo "Commiting into svn as Ready for STAGE"
-#svn commit --username $svnUser --password $svnPasswd --no-auth-cache --non-interactive --trust-server-cert -m "Ready for STAGE" #Commit the file to SVN
+svn commit --username $svnUser --password $svnPasswd --no-auth-cache --non-interactive --trust-server-cert -m "Ready for STAGE" #Commit the file to SVN
 
 #Run the Web Server container in STAGE environment
 echo "Create web server container in docker"

@@ -42,9 +42,9 @@ class Test_Home_page2(unittest.TestCase):
         self.browser = webdriver.Firefox()
 
     def testTitle(self):
-        driver = webdriver.Firefox()
-        driver.get('http://'+IP+':'+PORT+'/webapp/views/homepage.html')
-        src = driver.page_source
+        self.browser.get('http://'+IP+':'+PORT+'/webapp/views/homepage.html') 
+        src = self.browser.page_source
+        print(src)
         text_found = re.search(r"ONE", src)
         self.assertNotEqual(text_found, None)
         
@@ -56,9 +56,9 @@ class Test_Home_page3(unittest.TestCase):
         self.browser = webdriver.Firefox()
 
     def testTitle(self):
-        driver = webdriver.Firefox()
-        driver.get('http://'+IP+':'+PORT+'/webapp/views/homepage.html')
-        src = driver.page_source
+        self.browser.get('http://'+IP+':'+PORT+'/webapp/views/homepage.html') 
+        src = self.browser.page_source
+        print(src)
         text_found = re.search(r"TWO", src)
         self.assertNotEqual(text_found, None)
         
