@@ -13,8 +13,8 @@ syntax_check_cache_path  "/home/niloday/chef-repo/.chef/syntaxcache"
 cookbook_path            ["/home/niloday/chef-repo/cookbooks"]
 
 no_proxy                 '127.0.0.1,10.51.238.183,gadevopsnt2,*.persistent.com,*.persistent.co.in'
-http_proxy               'http://niloday_tamhankar:Dev0ps2016@ptproxy.persistent.co.in:8080'
-https_proxy              'https://niloday_tamhankar:Dev0ps2016@ptproxy.persistent.co.in:8080'
+http_proxy               'http://firstname_lastname:password@ptproxy.persistent.co.in:8080'
+https_proxy              'https://firstname_lastname:password@ptproxy.persistent.co.in:8080'
 ssl_verify_mode          :verify_none
 
 
